@@ -1,0 +1,23 @@
+{
+  "name": "harkirat-mern-cohort",
+  "version": "1.0.0",
+  "description": "This Repository contains all the concept, pratice files, notes and project taught in the cohort.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ishan-009/Harkirat-MERN-Cohort.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ishan-009/Harkirat-MERN-Cohort/issues"
+  },
+  "homepage": "https://github.com/Ishan-009/Harkirat-MERN-Cohort#readme",
+  "dependencies": {
+    "jest": "^29.7.0"
+  }
+}
