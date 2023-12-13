@@ -1,4 +1,4 @@
-const countVowels = require("../medium/countVowels");
+const countVowels = require("../countVowels");
 
 describe("countVowels", () => {
   test("returns the correct count for strings with vowels", () => {
