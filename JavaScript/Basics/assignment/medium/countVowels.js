@@ -32,5 +32,4 @@ const stringInput = "Ishan";
 const result = countVowels(stringInput);
 
 console.log(result);
-
 module.exports = countVowels;
