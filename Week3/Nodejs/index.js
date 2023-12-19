@@ -15,6 +15,8 @@ const bcrypt = require("bcrypt");
 
 const config = require("./config/config.js");
 
+// mongodb://0.0.0.0:27017/cohort_playground
+
 mongoose
   .connect(config.MONGO_URL)
   .then(() => console.log("Connected to MongoDB"))
@@ -33,6 +35,7 @@ const userSchema = new mongoose.Schema(
       unique: true,
       trim: true,
       lowercase: true,
+      // index:true
     },
     email: {
       type: String,
@@ -44,6 +47,7 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+      select: false,
     },
     firstName: {
       type: String,
@@ -187,10 +191,9 @@ app.get("/users", async (req, res) => {
     if (username) filter.username = username;
     if (email) filter.email = email;
 
-    const users = await User.find(filter, null, {
-      limit: page_size,
-      skip,
-    })
+    const users = await User.find(filter)
+      .skip(skip)
+      .limit(page_size)
       .select("-password") // exclude password
       .lean(); // Customize data result with filer,  limit and skip
 
@@ -269,6 +272,34 @@ app.put("/users/update/:id", async (req, res) => {
       .json({ message: "Updated User Details", data: user });
   } catch (error) {
     // Handle other errors here
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+app.delete("/users/delete/:id", async (req, res) => {
+  try {
+    // Retrieve Id
+    const { id } = req.params;
+
+    // Check if Id is valid or not
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "ID is Invalid" });
+    }
+
+    // Check user existence
+
+    const user = await User.findByIdAndDelete(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "UserId not Found" });
+    }
+
+    return res
+      .status(201)
+      .json({ message: "User with given Id is deleted successfully" });
+  } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
