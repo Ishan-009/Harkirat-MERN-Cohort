@@ -2,10 +2,10 @@
   "name": "harkirat-mern-cohort",
   "version": "1.0.0",
   "description": "This Repository contains all the concept, pratice files, notes and project taught in the cohort.",
-  "main": "index.js",
+  "main": "Week3/Nodejs/app1/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon your-app.js"
+    "start": "nodemon Week3/Nodejs/app1/index.js"
   },
   "repository": {
     "type": "git",
