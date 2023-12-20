@@ -20,6 +20,11 @@ const validatePostUserRequest = Joi.object({
   lastName: Joi.string().optional(),
 });
 
+const validateSignInRequest = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().required(),
+});
+
 // Get by ID , Validate Param
 
 const validateIdParam = Joi.object({
@@ -43,4 +48,5 @@ module.exports = {
   validateIdParam,
   validatePostUserRequest,
   validateUpdateUserRequest,
+  validateSignInRequest,
 };

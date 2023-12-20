@@ -17,6 +17,10 @@ connectToDatabase();
 
 app.use(express.json());
 
+//Auth Routes
+const authRoutes = require("./routes/authRoutes.js");
+app.use("", authRoutes);
+
 // User Routes
 const userRoutes = require("./routes/userRoutes.js");
 app.use("/users", userRoutes);
@@ -24,6 +28,11 @@ app.use("/users", userRoutes);
 // Error Handling
 const errorMiddleware = require("./middleware/errorMiddleware.js");
 app.use(errorMiddleware);
+
+// // Create Admin User
+
+// const createAdminUser = require("./utils/explicitCreateAdmin.js");
+// createAdminUser();
 
 // Last Step:- Enable application to listen on port
 app.listen(port, () => console.log(`Server listening on port ${port}`));

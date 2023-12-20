@@ -202,4 +202,11 @@ async function deleteUser(req, res) {
   }
 }
 
-module.exports = { createUser, getUsers, getUserById, deleteUser, updateUser };
+module.exports = {
+ 
+  createUser,
+  getUsers,
+  getUserById,
+  deleteUser,
+  updateUser,
+};
