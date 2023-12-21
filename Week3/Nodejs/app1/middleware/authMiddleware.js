@@ -6,7 +6,7 @@ function generateAccessToken(user) {
     { sub: user._id, username: user.username, role: user.role }, // Include 'role'
     config.JWT_SECRET,
     {
-      expiresIn: "15m", // Adjust as needed
+      expiresIn: "20m", // Adjust as needed
     }
   );
 }
