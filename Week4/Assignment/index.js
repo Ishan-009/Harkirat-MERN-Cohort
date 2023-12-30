@@ -1,6 +1,6 @@
 let globalId = 1;
-let todoState = [{ id: 1001, title: "abc", description: "description abc" }];
-let oldTodoState = [{ id: 1000, title: "abc", description: "description abc" }];
+let todoState = [];
+let oldTodoState = [];
 
 function createContainerDiv(obj) {
   const containerDiv = document.createElement("div");
@@ -88,8 +88,6 @@ function updateTodoInDom(newTodo) {
 function updateState(newTodos) {
   const existingIds = new Set(oldTodoState.map((todo) => todo.id));
   const newIds = new Set(newTodos.map((todo) => parseInt(todo.id)));
-  // getting maximum Ids
-  const maximumIds = Math.max(...existingIds);
   const added = [];
   const deleted = [];
   const updated = [];
@@ -129,9 +127,9 @@ function updateState(newTodos) {
     deleted.push({ id, ...oldTodoState[id], isDeleted: true });
   }
 
-  console.log("Added array:", added);
-  console.log("Deleted array:", deleted);
-  console.log("Updated array:", updated);
+  // console.log("Added array:", added);
+  // console.log("Deleted array:", deleted);
+  // console.log("Updated array:", updated);
   addTodoToDom(added);
   removeTodoFromDom(deleted);
   updateTodoInDom(updated);
