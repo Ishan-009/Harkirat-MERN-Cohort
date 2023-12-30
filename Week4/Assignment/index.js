@@ -5,32 +5,26 @@ let oldTodoState = [{ id: 1000, title: "abc", description: "description abc" }];
 function createContainerDiv(obj) {
   const containerDiv = document.createElement("div");
   containerDiv.setAttribute("data-todo-id", obj.id); // Set a common attribute
-  // Setting attribute inside divs
+  // Setting attribute inside container Div
   containerDiv.setAttribute("data-title", obj.title);
   containerDiv.setAttribute("data-description", obj.description);
   containerDiv.classList.add("todo-container");
-  // creating Inner divs
-  const titleDiv = document.createElement("div");
-  const todoIdDiv = document.createElement("div");
-  const descriptionDiv = document.createElement("div");
-  titleDiv.classList.add("todo-title");
-  descriptionDiv.classList.add("todo-description");
+
+  // creating Inner divs with class and content
+  const titleDiv = createDiv("todo-title", obj.title);
+  const todoIdDiv = createDiv("todo-id", obj.id);
+  const descriptionDiv = createDiv("todo-description", obj.description);
+
   // Creating Edit Button
-  const editButton = document.createElement("button");
-  editButton.setAttribute("todoId", obj.id);
-  editButton.classList.add("editTodo");
-  editButton.textContent = "Edit Todo";
-  editButton.onclick = editTodo;
+  const editButton = createButton("editTodo", editTodo, obj.id, "Edit Todo");
+
   // Creating removeButton
-  const removeButton = document.createElement("button");
-  removeButton.setAttribute("todoId", obj.id);
-  removeButton.classList.add("removeTodo");
-  removeButton.textContent = "Delete Todo";
-  removeButton.onclick = deleteTodo;
-  // Setting Values Inside Divs
-  todoIdDiv.innerHTML = obj.id;
-  titleDiv.innerHTML = obj.title;
-  descriptionDiv.innerHTML = obj.description;
+  const removeButton = createButton(
+    "removeTodo",
+    deleteTodo,
+    obj.id,
+    "Delete Todo"
+  );
 
   // Appending Divs and buttons
   containerDiv.appendChild(todoIdDiv);
@@ -40,6 +34,22 @@ function createContainerDiv(obj) {
   containerDiv.append(removeButton);
 
   return containerDiv;
+}
+
+function createDiv(className, content) {
+  const div = document.createElement("div");
+  div.classList.add(className);
+  div.textContent = content;
+  return div;
+}
+
+function createButton(className, clickHandler, id, textContent) {
+  const button = document.createElement("button");
+  button.setAttribute("todoId", id);
+  button.classList.add(className);
+  button.textContent = textContent;
+  button.onclick = clickHandler;
+  return button;
 }
 
 function addTodoToDom(todo) {
@@ -64,7 +74,7 @@ function removeTodoFromDom(todos) {
 
 function updateTodoInDom(newTodo) {
   for (let obj of newTodo) {
-    // for every id present in newtodo array of object, we need to find that container div and then we have to update them respectfully
+    // for every id present in newtodo array of object, we need to find that container div and then we have to update them
     const updateContainer = document.querySelector(
       `[data-todo-id="${obj.id}"]`
     );
@@ -78,27 +88,25 @@ function updateTodoInDom(newTodo) {
 function updateState(newTodos) {
   const existingIds = new Set(oldTodoState.map((todo) => todo.id));
   const newIds = new Set(newTodos.map((todo) => parseInt(todo.id)));
-  // getting maximum Ids
-  const maximumIds = Math.max(...existingIds);
   const added = [];
   const deleted = [];
   const updated = [];
 
   // Added & update array edge case
   for (let key of newTodos) {
-    const id = key.id;
+    const newTodoId = key.id;
 
-    if (!existingIds.has(id)) {
+    if (!existingIds.has(newTodoId)) {
       // If the id is not present in oldTodoState, it's newly added
       added.push({
-        id,
+        newTodoId,
         title: key.title,
         description: key.description,
         isNewlyAdded: true,
       });
     } else {
       // Check if the id exists in oldTodoState and if the object properties are different
-      const oldTodo = oldTodoState.find((todo) => todo.id === id);
+      const oldTodo = oldTodoState.find((todo) => todo.id === newTodoId);
 
       if (oldTodo && !compareObjects(key, oldTodo)) {
         updated.push(key);
