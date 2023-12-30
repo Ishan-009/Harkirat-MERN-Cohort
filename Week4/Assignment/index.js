@@ -1,46 +1,52 @@
 let globalId = 1;
-let todoState = [];
-let oldTodoState = [];
+let todoState = [{ id: 1001, title: "abc", description: "description abc" }];
+let oldTodoState = [{ id: 1000, title: "abc", description: "description abc" }];
+
+function createContainerDiv(obj) {
+  const containerDiv = document.createElement("div");
+  containerDiv.setAttribute("data-todo-id", obj.id); // Set a common attribute
+  // Setting attribute inside divs
+  containerDiv.setAttribute("data-title", obj.title);
+  containerDiv.setAttribute("data-description", obj.description);
+  containerDiv.classList.add("todo-container");
+  // creating Inner divs
+  const titleDiv = document.createElement("div");
+  const todoIdDiv = document.createElement("div");
+  const descriptionDiv = document.createElement("div");
+  titleDiv.classList.add("todo-title");
+  descriptionDiv.classList.add("todo-description");
+  // Creating Edit Button
+  const editButton = document.createElement("button");
+  editButton.setAttribute("todoId", obj.id);
+  editButton.classList.add("editTodo");
+  editButton.textContent = "Edit Todo";
+  editButton.onclick = editTodo;
+  // Creating removeButton
+  const removeButton = document.createElement("button");
+  removeButton.setAttribute("todoId", obj.id);
+  removeButton.classList.add("removeTodo");
+  removeButton.textContent = "Delete Todo";
+  removeButton.onclick = deleteTodo;
+  // Setting Values Inside Divs
+  todoIdDiv.innerHTML = obj.id;
+  titleDiv.innerHTML = obj.title;
+  descriptionDiv.innerHTML = obj.description;
+
+  // Appending Divs and buttons
+  containerDiv.appendChild(todoIdDiv);
+  containerDiv.appendChild(titleDiv);
+  containerDiv.appendChild(descriptionDiv);
+  containerDiv.append(editButton);
+  containerDiv.append(removeButton);
+
+  return containerDiv;
+}
 
 function addTodoToDom(todo) {
   const parentDiv = document.getElementById("todos");
 
   for (let obj of todo) {
-    const containerDiv = document.createElement("div");
-    containerDiv.setAttribute("data-todo-id", obj.id); // Set a common attribute
-    // Setting attribute inside divs
-    containerDiv.setAttribute("data-title", obj.title);
-    containerDiv.setAttribute("data-description", obj.description);
-    containerDiv.classList.add("todo-container");
-    // creating Inner divs
-    const titleDiv = document.createElement("div");
-    const todoIdDiv = document.createElement("div");
-    const descriptionDiv = document.createElement("div");
-    titleDiv.classList.add("todo-title");
-    descriptionDiv.classList.add("todo-description");
-    // Creating Edit Button
-    const editButton = document.createElement("button");
-    editButton.setAttribute("todoId", obj.id);
-    editButton.classList.add("editTodo");
-    editButton.textContent = "Edit Todo";
-    editButton.onclick = editTodo;
-    // Creating removeButton
-    const removeButton = document.createElement("button");
-    removeButton.setAttribute("todoId", obj.id);
-    removeButton.classList.add("removeTodo");
-    removeButton.textContent = "Delete Todo";
-    removeButton.onclick = deleteTodo;
-    // Setting Values Inside Divs
-    todoIdDiv.innerHTML = obj.id;
-    titleDiv.innerHTML = obj.title;
-    descriptionDiv.innerHTML = obj.description;
-
-    // Appending Divs and buttons
-    containerDiv.appendChild(todoIdDiv);
-    containerDiv.appendChild(titleDiv);
-    containerDiv.appendChild(descriptionDiv);
-    containerDiv.append(editButton);
-    containerDiv.append(removeButton);
+    const containerDiv = createContainerDiv(obj);
     parentDiv.append(containerDiv);
   }
 }
@@ -70,19 +76,10 @@ function updateTodoInDom(newTodo) {
 }
 
 function updateState(newTodos) {
-  console.log("new todo function start", newTodos);
-  console.log(
-    "oldtodostate function value at start function of update state",
-    oldTodoState
-  );
-  // Check existing Ids
   const existingIds = new Set(oldTodoState.map((todo) => todo.id));
-  // console.log("Existing ids", existingIds);
   const newIds = new Set(newTodos.map((todo) => parseInt(todo.id)));
-  // console.log("new ids", newIds);
   // getting maximum Ids
   const maximumIds = Math.max(...existingIds);
-
   const added = [];
   const deleted = [];
   const updated = [];
@@ -101,11 +98,9 @@ function updateState(newTodos) {
       });
     } else {
       // Check if the id exists in oldTodoState and if the object properties are different
-
       const oldTodo = oldTodoState.find((todo) => todo.id === id);
 
       if (oldTodo && !compareObjects(key, oldTodo)) {
-        console.log("object is updated one ");
         updated.push(key);
       }
     }
@@ -119,26 +114,19 @@ function updateState(newTodos) {
     }
   }
 
-  // console.log("Missing IDs:", missingIds);
-
   // Generate deleted array
   for (let id of missingIds) {
     deleted.push({ id, ...oldTodoState[id], isDeleted: true });
   }
 
-  // console.log("Added array:", added);
-  // console.log("Deleted array:", deleted);
+  console.log("Added array:", added);
+  console.log("Deleted array:", deleted);
   console.log("Updated array:", updated);
   addTodoToDom(added);
   removeTodoFromDom(deleted);
   updateTodoInDom(updated);
 
-  // calculate these 3 arrays
-  // call addTodo, removeTodo, updateTodo functions on each of the
-  // elements
   oldTodoState = [...newTodos]; // creating new copy of the array to avoid pointing to the todostate array
-
-  // console.log(oldTodoState);
 }
 
 function addTodo() {
@@ -163,8 +151,7 @@ function deleteTodo() {
       break; // Stop the loop after removing the item
     }
   }
-  console.log("todo state array ", todoState);
-  console.log("old todo state array ", oldTodoState);
+
   updateState(todoState);
 }
 
