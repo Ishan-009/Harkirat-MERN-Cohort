@@ -127,9 +127,9 @@ function updateState(newTodos) {
     deleted.push({ id, ...oldTodoState[id], isDeleted: true });
   }
 
-  // console.log("Added array:", added);
-  // console.log("Deleted array:", deleted);
-  // console.log("Updated array:", updated);
+  console.log("Added array:", added);
+  console.log("Deleted array:", deleted);
+  console.log("Updated array:", updated);
   addTodoToDom(added);
   removeTodoFromDom(deleted);
   updateTodoInDom(updated);
@@ -190,7 +190,7 @@ function editTodo() {
     }
   }
 
-  console.log("editui", updatedTodoState);
+  // console.log("editui", updatedTodoState);
 
   if (todoFoundFlag !== 1) {
     alert("Something Wrong Occured, Id not found");
