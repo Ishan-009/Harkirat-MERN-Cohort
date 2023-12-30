@@ -88,25 +88,27 @@ function updateTodoInDom(newTodo) {
 function updateState(newTodos) {
   const existingIds = new Set(oldTodoState.map((todo) => todo.id));
   const newIds = new Set(newTodos.map((todo) => parseInt(todo.id)));
+  // getting maximum Ids
+  const maximumIds = Math.max(...existingIds);
   const added = [];
   const deleted = [];
   const updated = [];
 
   // Added & update array edge case
   for (let key of newTodos) {
-    const newTodoId = key.id;
+    const id = key.id;
 
-    if (!existingIds.has(newTodoId)) {
+    if (!existingIds.has(id)) {
       // If the id is not present in oldTodoState, it's newly added
       added.push({
-        newTodoId,
+        id,
         title: key.title,
         description: key.description,
         isNewlyAdded: true,
       });
     } else {
       // Check if the id exists in oldTodoState and if the object properties are different
-      const oldTodo = oldTodoState.find((todo) => todo.id === newTodoId);
+      const oldTodo = oldTodoState.find((todo) => todo.id === id);
 
       if (oldTodo && !compareObjects(key, oldTodo)) {
         updated.push(key);
