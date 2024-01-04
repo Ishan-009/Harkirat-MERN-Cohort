@@ -10,7 +10,7 @@ const zod = require("zod");
 
 const createTodoValidator = zod.object({
   title: zod.string(),
-  body: zod.string(),
+  description: zod.string(),
 });
 
 const updateTodoValidator = zod.object({

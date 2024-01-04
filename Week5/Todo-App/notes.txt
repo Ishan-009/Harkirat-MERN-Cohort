@@ -25,3 +25,52 @@ First
 => create new file for validation , types.js or somthing you like accordingly 
 
 =>Next we will write db stuff , retrieving data and putting data and all, for that instgall mongoose 
+=> write api request and logic , with valiation checks and all, check your app output , fix errors and thats set
+
+=> Now frontend part
+
+=> create react project with name frontend in Todo-app directory as done in backend, 
+=> Remove CSS and other rubbish files
+=> Create component folder and create components, CreateTodo Component, add button and two input box in it , and with some generic styling 
+
+=> Create another component, now which is Todo itself, it has div and has three elements which are title, description adn a button naming complete or incomplete 
+
+=> here you have to use props and fill the elements with the props itself
+
+-> now add thsi components to the app component, by importing them, under the App Component
+
+=> Then you can create mock data first and pass as props in todo component as todo = the value ,  for mock testing the upto date created frontend 
+
+=> and then you can start working on figuring to use state and getting backend data syncing with state and all 
+
+
+=> for syncing state to get data from backend , for now harkirat uses fetch which is a wrong way as it sends infinite requests on re rendering, and using promises in then you have to use state function and pass json data to the state function and update the state and it will eventually set as property prop and go to todo component
+
+
+=> for post request , here bit inoptimal way is to use two states for the both input element and detect changes in the both and use fetch request and make post reqeust to the server and thus make it work 
+
+=> for that, we are using onchange function on input element, in that we pass callback function that uses event of the element which detects changes made in input text box value , and we can use that  data changes or say user input and store in a variable and then we can call update state function of input element which are title or description respectively
+
+=> on for making post requset we will use on click property in that we will pass callback function which will make post reqeust using fetch method to the server, containing two state values which are title and description 
+
+=> so here in a way we have created bit sophisticated todo application 
+
+=> alternative here is axios which is better than fetch in syntax and implementation wise
+
+ apart from that in get request we can do not simple use ftech get requesta nd update state in promise then keyword, as what will happen is , as any things changes in todo , whole component will rerender plus there will be infinte requests for changing/updates of the state , so here we useEffect hook that we will learn in next class, 
+
+ => and also we have to json.stringify and then pass data to the backend this is hwo fetch works 
+
+=> Effective way is to axios instead of fetch for fetching, for post , detecting changes and then using fetch in body is not right way , optimal way is react query over here, we will learn that in further lectures next weekend 
+
+=> you also have to care about cors in backend, as backend neglects the silent request from frontend , for that you have to use cors as in middleware, here you can also then set the url origin then it will only request fromt hsi url 
+
+=> another thing in fetch , we have to pass header as Content-type:application/json so that our backend knows we are sending json data, 
+
+what happens is app.use(express.json()) detects json data for that it will check for availability for json data from reqeust 
+
+app.use(cors({origin:""}))
+
+
+render for backend 
+vercel for frontend

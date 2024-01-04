@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 const { todo } = require("./db");
 const port = 3000;
+const cors = require("cors");
+app.use(cors());
 
 // Importing Validations
 
@@ -24,11 +26,14 @@ app.post("/todos", async (req, res) => {
   const body = req.body;
   const validatedData = createTodoValidator.safeParse(body);
   if (!validatedData.success) {
-    return res.status(400).json("Bad Request with body parameters");
+    return res.status(400).json({
+      message: "Bad Request with body parameters",
+    });
   }
+  const { title, description } = body;
   const data = await todo.create({
-    title: validatedData.title,
-    description: validatedData.description,
+    title: title,
+    description: description,
     completed: false,
   });
 
@@ -44,9 +49,9 @@ app.put("/completed", async (req, res) => {
   if (!validatedData.success) {
     return res.status(400).json("Bad Request with body parameters");
   }
-
+  const { title, description } = body;
   const data = await todo.update(
-    { _id: validatedData.id },
+    { _id: req.id },
     {
       completed: true,
     }
@@ -57,6 +62,17 @@ app.put("/completed", async (req, res) => {
   }
 
   res.status(200).send({ message: "Todo Updated Successfully", data: data });
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  if (err.name === "ValidationError") {
+    res.status(400).json({ error: err.message });
+  } else if (err instanceof mongoose.Error) {
+    res.status(500).json({ error: "Mongoose Error" });
+  } else {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
