@@ -1,0 +1,27 @@
+If someone comes to me and say create todo app for me, 
+I will create readme.md file and list down the features and all the important information outline of the app in this file 
+
+
+At High Level,  when you get project always start with backend first and then build frontend 
+
+
+Backend
+
+=> Whenever you start creating backend you have to initialize node project
+=> Then you have to create package.json file (IMP)
+
+=> Installing express for nodejs application , it will install express and required module for express to run under the node_modules folder and "Express" will be mentioned in your package.json , in our dependency list  of the project 
+
+=> Usually you dont share your backend project with node_modules , you just give your project code alogn with package.json and other user/person will can run npm install to install dependency of the project which is mentioned in package.json, so npm sees the package.json and recongnises the dependency of the project and then install all of the dependences in the other user/person project automatically 
+
+First 
+=> create index.js and start writing code with express boilerplate code with middleware, reqeusts outline and all
+
+=> Next Step is Validation, We are using Zod here, install zod , Create Mock User Body Data that you expect from the each request from teh user and create validation in zod accordingly 
+
+=> Import these validation from validation file to main index.js file and implement those validation functions in the http requests of the application , where required
+
+=> Now creating mongo db schema , creating db.js , install mongoose
+=> create new file for validation , types.js or somthing you like accordingly 
+
+=>Next we will write db stuff , retrieving data and putting data and all, for that instgall mongoose 

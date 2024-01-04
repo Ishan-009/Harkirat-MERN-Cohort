@@ -152,7 +152,6 @@ function addTodo() {
 
 function deleteTodo() {
   const todoId = +this.getAttribute("todoId"); // or use parseInt(this.getAttribute("todoId"), 10);
-
   for (let i = 0; i < todoState.length; i++) {
     if (todoState[i].id === todoId) {
       todoState.splice(i, 1);
