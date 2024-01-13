@@ -1,0 +1,196 @@
+React rerendering 
+
+minimizing rerenders
+
+
+
+React Developer tools 
+
+
+first way pushing down to various component which has state changes and keeping component with no state changes or say static state changes seperately so the static componetn doesnt rerender along with things which are changing with state
+
+so here we are narrowing down / dividing frequent chnage state to various different component seperately so 
+
+so state change in another component doesnt affect other component which has close to no changes and does'nt have to rerender
+
+if child updates parent will be updated too
+
+React.memo to avoid rerender by implementing on component where it is going to change 
+
+
+KEYS
+
+helps react to rerender by uniquely identifys components by keys as it would know which id has been updated or removed , it will know where to update or do something , so it helps react to rerendering 
+
+
+using wrapper components
+
+
+using children to render that gives access to parent component 
+
+to render whatever inside parent component be it anything like content,component, div or whatever inside child component using children keyword has to put in child component function argument using object destructuring 
+
+we can apply styling to card wrapper and that can contain other child components 
+
+
+
+
+// Wrapper Component
+import React, { useState } from "react";
+let counter = 4;
+function App() {
+  function TextComponent() {
+    return <div>Hi There</div>;
+  }
+
+  function CardWrapper({ innerComponent }) {
+    return <div style={{ border: "2px solid grey" }}>{innerComponent}</div>;
+  }
+
+  return (
+    <div>
+      <CardWrapper innerComponent={<TextComponent />} />
+      <CardWrapper innerComponent={<TextComponent />} />
+    </div>
+  );
+}
+export default App;
+
+
+
+// todo app with keys and props 
+import React, { useState } from "react";
+let counter = 4;
+function App() {
+  const [todos, setTodos] = useState([
+    {
+      id: 1,
+      title: "Todo1",
+      description: "Todo Description 1",
+    },
+    {
+      id: 2,
+      title: "Todo2",
+      description: "Todo Description 2",
+    },
+    {
+      id: 3,
+      title: "Todo3",
+      description: "Todo Description 3",
+    },
+  ]);
+
+  function updateTodo() {
+    setTodos([
+      ...todos,
+      {
+        id: counter++,
+        title: Math.random().toString(),
+        description: Math.random().toString(),
+      },
+    ]);
+  }
+
+  return (
+    <>
+      <button onClick={updateTodo}>Add Todo</button>
+      {todos.map(function (todo) {
+        return <Todo key={todo.id} title={todo.title} description={todo.description} />;
+      })}
+    </>
+  );
+}
+
+function Todo({ title, description }) {
+  return (
+    <div>
+      <div>{title}</div>
+      <div>{description}</div>
+    </div>
+  );
+}
+
+export default App;
+
+// managing state component dividing state componentand static componetn seperately into different component
+// move state down
+
+import { useState } from "react";
+let counter = 0;
+function App() {
+  function Title({ title }) {
+    return <div>Static Title :- {title}</div>;
+  }
+  return (
+    <>
+      <ButtonWithTitle initialTitle="Ishan"></ButtonWithTitle>
+      <Title title="Ishan"></Title>
+    </>
+  );
+}
+
+function ButtonWithTitle({ initialTitle }) {
+  const [title, setTitle] = useState(initialTitle);
+
+  function updateTitle() {
+    setTitle("my name is " + Math.random());
+  }
+  return (
+    <div>
+      <button onClick={updateTitle}>Click me</button>
+      <div key={counter++}>{title}</div>
+    </div>
+  );
+}
+
+export default App;
+
+
+
+// using wrapper component
+
+
+
+
+import { useState } from "react";
+let counter = 0;
+function App() {
+  return (
+    <>
+      <CardComponent>
+        <CardTitleComponent></CardTitleComponent>
+      </CardComponent>
+    </>
+  );
+}
+
+function CardComponent({ children }) {
+  return <div style={{ border: "5px solid black" }}>{children}</div>;
+}
+
+function CardTitleComponent() {
+  const [title, setTitle] = useState("Card Title");
+  function updateTitle() {
+    setTitle(Math.random() + "Title");
+  }
+  return (
+    <div>
+      <button onClick={updateTitle}>Change Title</button>
+      <div>{title}</div>
+    </div>
+  );
+}
+
+
+export default App;
+
+
+// React.memo 
+
+
+
+fragment vs div issues on using memo            
+
+For the fragment re-rendering issue. I tried to understand it like this.
+You said parent div rerenders(always) and parent div is also the top-level element. 
+But using a fragment we don't have a parent so every child is a top-level element that has to re-render(always)
