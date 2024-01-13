@@ -1,43 +1,48 @@
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-import Dashboard from "./components/Dashboard";
-import Landing from "./components/Landing";
-
+import { useState } from "react";
+import { CountContext } from "./context";
 function App() {
+  const [count, setCount] = useState(0);
+  // Wrap anyone that wants to use the teleproted value inside a provider
   return (
     <div>
-      <BrowserRouter>
-        <Appbar />
-        <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/" element={<Landing />} />
-        </Routes>
-      </BrowserRouter>
+      {/* <CountContext.Provider value={count}> */}
+      <Count count={count} setCount={setCount} />
+      {/* </CountContext.Provider> */}
     </div>
   );
 }
 
-function Appbar() {
-  const navigate = useNavigate();
-
+function Count({ count, setCount }) {
   return (
     <div>
-      <div>
-        <button
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          Landing page
-        </button>
+      <CountRenderer count={count} />
+      <Buttons count={count} setCount={setCount} />
+    </div>
+  );
+}
 
-        <button
-          onClick={() => {
-            navigate("/dashboard");
-          }}
-        >
-          Dashboard
-        </button>
-      </div>
+function CountRenderer({ count }) {
+  return <div>{count}</div>;
+}
+
+function Buttons({ count, setCount }) {
+  return (
+    <div>
+      <button
+        onClick={() => {
+          setCount(count + 1);
+        }}
+      >
+        Increase
+      </button>
+
+      <button
+        onClick={() => {
+          setCount(count - 1);
+        }}
+      >
+        Decrease
+      </button>
     </div>
   );
 }
