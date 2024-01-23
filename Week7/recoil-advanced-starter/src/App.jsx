@@ -8,7 +8,7 @@ import {
   networkAtom,
   messagingAtom,
   allNotificationSelector,
-} from "../../react-7-1/src/store/atom";
+} from "../store/atom";
 
 function App() {
   const notificationValue = useRecoilValue(notificationsAtom);
