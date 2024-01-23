@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import "./index.css";
+import { axios } from "axios";
 import {
   notificationsAtom,
   jobsAtom,
@@ -16,6 +17,12 @@ function App() {
   const jobsValue = useRecoilValue(jobsAtom);
 
   const allNotificationSumValue = useRecoilValue(allNotificationSelector);
+
+  useEffect(() => {
+    const data = axios.get("");
+    return data.json;
+  }, []);
+
   return (
     <div>
       <button>Home </button>
