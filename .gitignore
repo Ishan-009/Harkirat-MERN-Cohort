@@ -3,3 +3,4 @@ Week3/Nodejs/config
 config/
 node_modules
 dist
+.env
