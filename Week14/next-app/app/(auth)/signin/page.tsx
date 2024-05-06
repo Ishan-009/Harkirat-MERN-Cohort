@@ -1,4 +1,10 @@
+"use client";
+
+import { ChangeEventHandler, useState } from "react";
+
 export default function Signin() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <div className="flex justify-center flex-col">
       <div className="flex justify-center">
