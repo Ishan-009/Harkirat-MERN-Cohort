@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  mongodb:
+    image: "mongo"
+    container_name: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data:/data/db
+
+  backend:
+    build: .
+    container_name: backend_app22
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URL=mongodb://mongodb/myDatabase
+
+volumes:
+  mongodb_data:
