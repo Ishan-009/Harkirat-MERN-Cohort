@@ -1,0 +1,8 @@
+ "scripts": {
+    "build": "esbuild src/index.ts --outfile=dist/index.js --bundle --platform=node --target=node14",
+    "dev": "esbuild src/index.ts --outfile=dist/index.js --bundle --platform=node --target=node14 && node dist/index.js" 
+  },
+
+
+  We can also use tsup or ebuild for this scenario however in this case we have used esbuild 
+  this is new esbuild script build command to compile typescript in order to use common repo package module we are using esbuild as tsc is giving some error so above is the esbuild which we are using to compile and its already working
