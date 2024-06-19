@@ -1,3 +1,6 @@
 [submodule "Week15/week-15-live-1"]
 	path = Week15/week-15-live-1
 	url = git@github.com:100xdevs-cohort-2/week-15-live-1.git
+[submodule "week18/week-18-2-ci-cd"]
+	path = week18/week-18-2-ci-cd
+	url = git@github.com:Ishan-009/week-18-2-ci-cd.git
