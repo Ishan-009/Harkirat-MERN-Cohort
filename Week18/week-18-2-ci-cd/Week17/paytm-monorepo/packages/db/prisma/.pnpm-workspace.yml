@@ -1,5 +1,0 @@
-packages:
-  - "packages/*"
-  - "services/*"
-  - "apps/*"
-  # Add other paths to packages if necessary
