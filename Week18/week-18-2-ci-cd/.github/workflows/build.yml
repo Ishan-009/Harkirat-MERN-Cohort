@@ -1,4 +1,4 @@
-name: Build on UPR
+name: Build on PR
 
 on:
   pull_request:
